@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import it.esercizio.best_of_the_year.model.Movie;
 import it.esercizio.best_of_the_year.model.Song;
@@ -15,9 +16,10 @@ import it.esercizio.best_of_the_year.model.Song;
 
 public class BestController {
 
+    String authorName = "Luca Mainardi";
+
     @GetMapping("/")
     public String home(Model model) {
-       String authorName = "Luca Mainardi";
        model.addAttribute("authorName", authorName);
        return "index";  
     }
@@ -41,13 +43,43 @@ public class BestController {
     @GetMapping("/movies")
     public String getMovies(Model model) {
         model.addAttribute("movies", getBestMovies());
-        return "index";
+        model.addAttribute("authorName", authorName);
+        return "movies";
     }
 
     @GetMapping("/songs")
     public String getSongs(Model model) {
         model.addAttribute("songs", getBestSongs());
-        return "index";
+        model.addAttribute("authorName", authorName);
+        return "songs";
     }
-   
+
+    @GetMapping("/movies/{id}")
+    public String getMovieById(@PathVariable int id, Model model){
+        if (id <= 0 || id > getBestMovies().size()) {
+            model.addAttribute("error", "Film non trovato");
+        } else {
+            model.addAttribute("movies", getBestMovies().get(id));
+        }
+
+        return "movies"; 
+    }
+
+    @GetMapping("/songs/{id}")
+    public String getSongById(@PathVariable int id, Model model){
+        if(id <= 0 || id > getBestSongs().size()) {
+            model.addAttribute("error", "Canzone non trovata");
+        } else {
+            model.addAttribute("songs", getBestSongs().get(id));
+        }
+
+        return "songs";
+    }
+    
 }
+
+
+// Creare due metodi
+// - “/movies/{id}”
+// - “/songs/{id}”
+// che dato il parametro id passato tramite il path, mostri in pagina il titolo relativo al film / canzone

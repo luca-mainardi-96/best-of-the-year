@@ -4,9 +4,16 @@
 <head><meta charset="UTF-8"><title>Best of the year</title></head>
 
 <body>
-
+    
     <h1 th:text="'Best of the year by ' + ${authorName}"></h1>
- 
+
+    <div th:if="${movies.size() != 0}">
+        <p>Lista dei film</p>
+        <ul>
+            <li th:each="m : ${movies}" th:text="|${m.id} - ${m.title}|"></li>
+        </ul>
+    </div>
+
 </body>
 
 </html>
