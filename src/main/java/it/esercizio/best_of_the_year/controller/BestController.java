@@ -55,22 +55,39 @@ public class BestController {
     }
 
     @GetMapping("/movies/{id}")
-    public String getMovieById(@PathVariable int id, Model model){
-        if (id <= 0 || id > getBestMovies().size()) {
+    public String getMovieById(@PathVariable (name = "id") int param, Model model){
+        model.addAttribute("authorName", authorName);
+        List<Movie> oneMovieList = new ArrayList<>();
+
+        for(Movie m : getBestMovies()){
+            if (m.getId() == param){
+                oneMovieList.add(m);
+            }
+        }
+
+        if (param <= 0 || param > getBestMovies().size()) {
             model.addAttribute("error", "Film non trovato");
         } else {
-            model.addAttribute("movies", getBestMovies().get(id));
+            model.addAttribute("movies", oneMovieList);
         }
 
         return "movies"; 
     }
 
     @GetMapping("/songs/{id}")
-    public String getSongById(@PathVariable int id, Model model){
-        if(id <= 0 || id > getBestSongs().size()) {
+    public String getSongById(@PathVariable (name = "id") int param, Model model){
+        model.addAttribute("authorName", authorName);
+        List<Song> oneSongList = new ArrayList<>();
+
+        for(Song s : getBestSongs()){
+            if(s.getId() == param)
+            oneSongList.add(s);
+        }
+
+        if(param <= 0 || param > getBestSongs().size()) {
             model.addAttribute("error", "Canzone non trovata");
         } else {
-            model.addAttribute("songs", getBestSongs().get(id));
+            model.addAttribute("songs", oneSongList);
         }
 
         return "songs";
