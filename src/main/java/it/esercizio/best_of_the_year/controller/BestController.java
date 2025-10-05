@@ -94,9 +94,3 @@ public class BestController {
     }
     
 }
-
-
-// Creare due metodi
-// - “/movies/{id}”
-// - “/songs/{id}”
-// che dato il parametro id passato tramite il path, mostri in pagina il titolo relativo al film / canzone
