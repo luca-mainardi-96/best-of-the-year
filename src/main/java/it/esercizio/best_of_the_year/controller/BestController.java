@@ -57,40 +57,40 @@ public class BestController {
     @GetMapping("/movies/{id}")
     public String getMovieById(@PathVariable (name = "id") int param, Model model){
         model.addAttribute("authorName", authorName);
-        List<Movie> oneMovieList = new ArrayList<>();
+        Movie selectedMovie = null;
 
         for(Movie m : getBestMovies()){
             if (m.getId() == param){
-                oneMovieList.add(m);
+                selectedMovie = m;
             }
         }
 
         if (param <= 0 || param > getBestMovies().size()) {
             model.addAttribute("error", "Film non trovato");
         } else {
-            model.addAttribute("movies", oneMovieList);
+            model.addAttribute("movie", selectedMovie);
         }
 
-        return "movies"; 
+        return "movie_details"; 
     }
 
     @GetMapping("/songs/{id}")
     public String getSongById(@PathVariable (name = "id") int param, Model model){
         model.addAttribute("authorName", authorName);
-        List<Song> oneSongList = new ArrayList<>();
+        Song selectedSong = null;
 
         for(Song s : getBestSongs()){
             if(s.getId() == param)
-            oneSongList.add(s);
+            selectedSong = s;
         }
 
         if(param <= 0 || param > getBestSongs().size()) {
             model.addAttribute("error", "Canzone non trovata");
         } else {
-            model.addAttribute("songs", oneSongList);
+            model.addAttribute("song", selectedSong);
         }
 
-        return "songs";
+        return "song_details";
     }
     
 }
